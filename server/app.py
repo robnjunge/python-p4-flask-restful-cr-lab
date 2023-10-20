@@ -1,9 +1,6 @@
-#!/usr/bin/env python3
-
 from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-
 from models import db, Plant
 
 app = Flask(__name__)
@@ -40,7 +37,7 @@ api.add_resource(Plants, '/plants')
 
 class PlantByID(Resource):
     def get(self, id):
-        plant = (Plant.query.filter_by(id = id).first())
+        plant = (Plant.query.filter_by(id=id).first())
         plant_dict = plant.to_dict()
         return make_response(plant_dict, 200)
 

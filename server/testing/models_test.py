@@ -1,5 +1,3 @@
-from datetime import date
-
 from app import app
 from models import db, Plant
 
@@ -25,8 +23,17 @@ class TestPlant:
     def test_can_be_retrieved(self):
         '''can be used to retrieve records from the database.'''
         with app.app_context():
-            p = Plant.query.all()
-            assert(p)
+            # Create a test record before attempting to retrieve records
+            p = Plant(name="Test Plant")
+            db.session.add(p)
+            db.session.commit()
+
+            # Now, retrieve records and assert
+            records = Plant.query.all()
+            assert(records)
+
+            db.session.delete(p)
+            db.session.commit()
 
     def test_can_be_serialized(self):
         '''can create records with a to_dict() method for serialization.'''
